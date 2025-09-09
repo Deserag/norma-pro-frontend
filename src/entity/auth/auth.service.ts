@@ -9,7 +9,7 @@ import { IApiUrls } from '../api-url.token';
 import { API_URLS } from '../api-url.token';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private _isAuthenticated$ = new BehaviorSubject<boolean>(this.isAuthenticated());
+  isAuthenticated$ = new BehaviorSubject<boolean>(this.isAuthenticated());
   private _user$ = new BehaviorSubject<IResAuthUserInfo | null>(this.user);
 
   constructor(
@@ -58,7 +58,7 @@ export class AuthService {
           if (res.accessToken && res.user) {
             this.setToken(res, true);
             this.setUser(res.user);
-            this._isAuthenticated$.next(true);
+            this.isAuthenticated$.next(true);
           }
         })
       );
@@ -83,7 +83,7 @@ export class AuthService {
     sessionStorage.removeItem(EAuthKeys.TOKEN);
     localStorage.removeItem(EAuthKeys.TOKEN);
     localStorage.removeItem(EAuthKeys.USER);
-    this._isAuthenticated$.next(false);
+    this.isAuthenticated$.next(false);
     this._user$.next(null);
     this._router.navigate([EroutesConstants.AUTH, EroutesConstants.LOGIN]).then();
   }

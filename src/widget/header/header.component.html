@@ -1,35 +1,51 @@
 <mat-toolbar color="primary">
   <div class="header-container">
     <a routerLink="/main" class="logo">NormaPro</a>
-    <nav class="nav-links desktop">
+    <nav class="nav-links desktop" *ngIf="isAuthenticated">
       <a *ngFor="let item of menuItems" 
          [routerLink]="item.route" 
          routerLinkActive="active"
          mat-button>{{item.label}}</a>
+      <a *ngIf="isAdminOrSuperAdmin" 
+         routerLink="/main/admin" 
+         routerLinkActive="active"
+         mat-button>Админка</a>
     </nav>
     <button mat-icon-button class="mobile-menu-toggle" (click)="toggleMobileMenu()">
       <mat-icon>{{isMobileMenuOpen ? 'close' : 'menu'}}</mat-icon>
     </button>
-    <div class="user-menu">
+    <div class="user-menu" *ngIf="isAuthenticated">
       <button mat-icon-button [matMenuTriggerFor]="userMenu">
         <mat-icon>account_circle</mat-icon>
       </button>
       <mat-menu #userMenu="matMenu" class="user-menu-content">
         <button mat-menu-item routerLink="/profile">Профиль</button>
         <button mat-menu-item routerLink="/settings">Настройки</button>
-        <button mat-menu-item>Выйти</button>
+        <button mat-menu-item (click)="onClickLogOut()">Выйти</button>
       </mat-menu>
+    </div>
+    <div *ngIf="!isAuthenticated" class="guest-menu">
+      <a routerLink="/auth/login" mat-button>Войти</a>
     </div>
   </div>
 </mat-toolbar>
 <mat-sidenav-container class="mobile-menu" *ngIf="isMobileMenuOpen">
   <mat-sidenav mode="over" [(opened)]="isMobileMenuOpen">
-    <nav class="nav-links mobile">
+    <nav class="nav-links mobile" *ngIf="isAuthenticated">
       <a *ngFor="let item of menuItems" 
          [routerLink]="item.route" 
          routerLinkActive="active"
          mat-button
          (click)="toggleMobileMenu()">{{item.label}}</a>
+      <a *ngIf="isAdminOrSuperAdmin" 
+         routerLink="/main/admin" 
+         routerLinkActive="active"
+         mat-button
+         (click)="toggleMobileMenu()">Админка</a>
+      <button mat-button (click)="onClickLogOut(); toggleMobileMenu()">Выйти</button>
     </nav>
+    <div class="mobile-guest" *ngIf="!isAuthenticated">
+      <a routerLink="/auth/login" mat-button (click)="toggleMobileMenu()">Войти</a>
+    </div>
   </mat-sidenav>
 </mat-sidenav-container>

@@ -1,40 +1,123 @@
-import { Component } from '@angular/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
+// src/app/header/header.component.ts
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { EroutesConstants } from '../../routes';
+import { AuthService, UserService } from '../../entity';
+import { IGetUser } from '../../entity/user/user.interface';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [
-    CommonModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatMenuModule,
     MatSidenavModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatListModule,
+    MatIconModule,
+    MatButtonModule,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    MatMenuModule,
+    NgIf,
+    MatExpansionModule,
+    CommonModule,
   ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
+  protected readonly ERoutesConstans = EroutesConstants;
+  readonly #authService = inject(AuthService);
+  readonly #userApiService = inject(UserService);
+
+  userName = '';
+  userRoleId = '';
+  rolesMap = new Map<string, string>();
+
+  isRolesLoaded = false;
   isMobileMenuOpen = false;
+
   menuItems = [
-    { label: 'Главная', route: '/main' },
-    { label: 'Пользователи', route: '/user' },
-    { label: 'Клиенты', route: '/clients' },
-    { label: 'Уведомления', route: '/notifications' },
-    { label: 'Файлы', route: '/files' },
-    { label: 'Админка', route: '/admin' }
+    { label: 'Главная', route: '/main/home' },
+    { label: 'Документы', route: '/main/documents' },
+    { label: 'Проекты', route: '/main/projects' },
+    { label: 'Клиенты', route: '/main/clients' },
+    { label: 'Уведомления', route: '/main/notifications' },
+    { label: 'Пользователи', route: '/main/users' },
   ];
+
+  constructor() {
+    if (this.isAuthenticated) {
+      const user = this.#authService.user;
+      if (user && user.id) {
+        // this.loadUserInfo(user.id);
+      } else {
+        this.userName = 'Гость';
+        this.userRoleId = '';
+      }
+    } else {
+      this.userName = 'Гость';
+      this.userRoleId = '';
+    }
+  }
+
+  // loadUserInfo(userId: string) {
+  //   this.#userApiService.getUserInfo(userId).subscribe({
+  //     next: (response: IGetUser) => {
+  //       const { firstName = '', lastName = '', roleId = '' } = response.user;
+  //       this.userName = `${lastName} ${firstName}`.trim() || 'Имя пользователя';
+  //       this.userRoleId = roleId;
+  //       this.loadRoles();
+  //     },
+  //     error: () => {
+  //       this.userName = 'Имя пользователя';
+  //       this.userRoleId = '';
+  //       this.loadRoles();
+  //     },
+  //   });
+  // }
+
+  // loadRoles() {
+  //   this.#userApiService.getUserRole({ name: '', page: 1, pageSize: 10 }).subscribe({
+  //     next: (roles) => {
+  //       roles.rows.forEach((r) => {
+  //         this.rolesMap.set(r.name.toLowerCase(), r.id);
+  //       });
+  //       this.isRolesLoaded = true;
+  //     },
+  //     error: () => {
+  //       this.isRolesLoaded = false;
+  //     },
+  //   });
+  // }
 
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  onClickLogOut() {
+    console.log('Logout clicked');
+    this.#authService.logout();
+  }
+
+  get isAuthenticated(): boolean {
+    return this.#authService.isAuthenticated();
+  }
+
+  get isAdminOrSuperAdmin(): boolean {
+    if (!this.isRolesLoaded || !this.userRoleId) return false;
+    const adminId = this.rolesMap.get('admin');
+    const superAdminId = this.rolesMap.get('superadmin');
+    return this.userRoleId === adminId || this.userRoleId === superAdminId;
   }
 }

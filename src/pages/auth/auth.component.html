@@ -1,1 +1,62 @@
-<p>auth works!</p>
+<!-- src/app/auth/auth.component.html -->
+<div class="auth-container">
+  <div class="auth-card">
+    <h2 class="auth-title">Вход в Norma Pro</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <mat-form-field appearance="outline" class="auth-field">
+        <mat-label>Электронная почта <span class="required">*</span></mat-label>
+        <input
+          matInput
+          formControlName="login"
+          type="email"
+          placeholder="Введите email"
+          [class.required-error]="submitted && login?.hasError('required')"
+          [class.email-error]="submitted && login?.hasError('email')"
+        >
+        <mat-error *ngIf="submitted && login?.hasError('required')">
+          Электронная почта обязательна
+        </mat-error>
+        <mat-error *ngIf="submitted && login?.hasError('email')">
+          Неверный формат email
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="auth-field">
+        <mat-label>Пароль <span class="required">*</span></mat-label>
+        <input
+          matInput
+          formControlName="password"
+          type="password"
+          placeholder="Введите пароль"
+          [class.required-error]="submitted && password?.hasError('required')"
+          [class.minlength-error]="submitted && password?.hasError('minlength')"
+        >
+        <mat-error *ngIf="submitted && password?.hasError('required')">
+          Пароль обязателен
+        </mat-error>
+        <mat-error *ngIf="submitted && password?.hasError('minlength')">
+          Пароль должен содержать не менее 6 символов
+        </mat-error>
+      </mat-form-field>
+
+      <div class="auth-options">
+        <mat-checkbox formControlName="rememberMe">Запомнить меня</mat-checkbox>
+      </div>
+
+      <div class="error-message" *ngIf="errorMessage">{{errorMessage}}</div>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="loginForm.invalid"
+        class="auth-button"
+      >
+        Войти
+      </button>
+    </form>
+    <p class="auth-link">
+      Нет аккаунта? <a routerLink="/register">Зарегистрироваться</a>
+    </p>
+  </div>
+</div>

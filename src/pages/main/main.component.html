@@ -1,1 +1,107 @@
+```html
 <app-header></app-header>
+<main class="main-container">
+  <!-- Welcome Section -->
+  <section class="welcome-section">
+    <h1 class="welcome-title">Добро пожаловать, {{ userName }}!</h1>
+    <p class="welcome-subtitle">Norma Pro — ваша платформа для работы с ГОСТами и стандартами</p>
+    <div class="user-info">
+      <mat-icon>account_circle</mat-icon>
+      <span class="user-details">
+        <strong>{{ userName }}</strong>
+        <small *ngIf="userRole">({{ userRole }})</small>
+      </span>
+    </div>
+  </section>
+
+  <!-- Search Section -->
+  <section class="search-section">
+    <mat-form-field appearance="fill" class="search-field">
+      <mat-label>Поиск ГОСТов или документов</mat-label>
+      <input
+        matInput
+        [(ngModel)]="searchQuery"
+        (keyup.enter)="onSearch()"
+        placeholder="Введите номер ГОСТа, название или ключевые слова"
+      />
+      <button mat-icon-button matSuffix (click)="onSearch()" aria-label="Поиск">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+  </section>
+
+  <!-- Dashboard Grid -->
+  <section class="dashboard-grid">
+    <mat-grid-list cols="3" rowHeight="250px" gutterSize="24px">
+      <mat-grid-tile
+        *ngFor="let item of dashboardItems"
+        [colspan]="1"
+        [rowspan]="1"
+        [ngStyle]="{ display: item.adminOnly && !isAdmin ? 'none' : 'block' }"
+      >
+        <mat-card class="dashboard-card">
+          <mat-card-header>
+            <mat-icon mat-card-avatar class="dashboard-icon">{{ item.icon }}</mat-icon>
+            <mat-card-title>{{ item.label }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ item.description }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-flat-button color="primary" [routerLink]="item.route">Перейти</button>
+          </mat-card-actions>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </section>
+
+  <!-- Recent Items -->
+  <section class="recent-section">
+    <h3 class="section-title">Недавние документы и проекты</h3>
+    <mat-list>
+      <mat-list-item *ngFor="let item of recentItems">
+        <mat-icon matListIcon>{{
+          item.type === 'Документ' ? 'description' : 'assignment'
+        }}</mat-icon>
+        <div matLine>
+          <span>{{ item.name }}</span>
+          <span class="meta">{{ item.type }} • {{ item.updatedAt }}</span>
+        </div>
+        <button mat-icon-button [routerLink]="item.route">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </section>
+
+  <!-- Notifications -->
+  <section class="notifications-section">
+    <h3 class="section-title">Последние уведомления</h3>
+    <mat-list>
+      <mat-list-item *ngFor="let notification of notifications">
+        <mat-icon matListIcon>notifications</mat-icon>
+        <div matLine>
+          <span>{{ notification.message }}</span>
+          <span class="meta">{{ notification.date }}</span>
+        </div>
+        <button mat-icon-button [routerLink]="notification.route">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </section>
+
+  <!-- Quick Actions for Admins -->
+  <section class="quick-actions" *ngIf="isAdmin">
+    <h3 class="section-title">Административные действия</h3>
+    <div class="action-buttons">
+      <button mat-flat-button color="primary" [routerLink]="ERoutesConstans.ADMIN_PANEL">
+        Управление пользователями
+      </button>
+      <button mat-flat-button color="accent" [routerLink]="ERoutesConstans.ADMIN_PANEL">
+        Настройки системы
+      </button>
+    </div>
+  </section>
+</main>
+```
