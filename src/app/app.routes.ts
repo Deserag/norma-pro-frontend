@@ -34,6 +34,20 @@ export const userRoutes: Routes = [
   },
 ];
 
+export const personalAccount: Routes = [
+  {
+    path: EroutesConstants.PERSONAL_ACCOUNT,
+    loadComponent: () => import('../pages/personal-account/personal-account.component').then((m) => m.PersonalAccountComponent),
+    children: [
+      {
+        path: '',
+        redirectTo: EroutesConstants.PERSONAL_ACCOUNT,
+        pathMatch: 'full',
+      },
+    ]
+  }
+]
+
 export const clientRoutes: Routes = [
   {
     path: EroutesConstants.CLIENT_PANEL,
@@ -62,6 +76,7 @@ export const notificationRoutes: Routes = [
       import('../pages/notifications/notifications.component').then((m) => m.NotificationsComponent),
   },
 ];
+
 
 export const fileRoutes: Routes = [
   {
@@ -103,6 +118,7 @@ export const mainRoutes: Routes = [
   ...notificationRoutes,
   ...fileRoutes,
   ...adminRoutes,
+  ...personalAccount,
   { path: '**', redirectTo: EroutesConstants.HOME_PAGE },
 ];
 

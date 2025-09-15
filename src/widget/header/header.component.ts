@@ -1,4 +1,3 @@
-// src/app/header/header.component.ts
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -6,12 +5,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { EroutesConstants } from '../../routes';
 import { AuthService, UserService } from '../../entity';
-import { IGetUser } from '../../entity/user/user.interface';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
 import { NgIf } from '@angular/common';
 
@@ -29,7 +26,6 @@ import { NgIf } from '@angular/common';
     RouterLinkActive,
     MatMenuModule,
     NgIf,
-    MatExpansionModule,
     CommonModule,
   ],
   templateUrl: './header.component.html',
@@ -60,7 +56,6 @@ export class HeaderComponent {
     if (this.isAuthenticated) {
       const user = this.#authService.user;
       if (user && user.id) {
-        // this.loadUserInfo(user.id);
       } else {
         this.userName = 'Гость';
         this.userRoleId = '';
@@ -71,42 +66,11 @@ export class HeaderComponent {
     }
   }
 
-  // loadUserInfo(userId: string) {
-  //   this.#userApiService.getUserInfo(userId).subscribe({
-  //     next: (response: IGetUser) => {
-  //       const { firstName = '', lastName = '', roleId = '' } = response.user;
-  //       this.userName = `${lastName} ${firstName}`.trim() || 'Имя пользователя';
-  //       this.userRoleId = roleId;
-  //       this.loadRoles();
-  //     },
-  //     error: () => {
-  //       this.userName = 'Имя пользователя';
-  //       this.userRoleId = '';
-  //       this.loadRoles();
-  //     },
-  //   });
-  // }
-
-  // loadRoles() {
-  //   this.#userApiService.getUserRole({ name: '', page: 1, pageSize: 10 }).subscribe({
-  //     next: (roles) => {
-  //       roles.rows.forEach((r) => {
-  //         this.rolesMap.set(r.name.toLowerCase(), r.id);
-  //       });
-  //       this.isRolesLoaded = true;
-  //     },
-  //     error: () => {
-  //       this.isRolesLoaded = false;
-  //     },
-  //   });
-  // }
-
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
 
   onClickLogOut() {
-    console.log('Logout clicked');
     this.#authService.logout();
   }
 
