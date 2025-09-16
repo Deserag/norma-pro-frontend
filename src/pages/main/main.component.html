@@ -1,6 +1,5 @@
 <app-header></app-header>
 <main class="main-container">
-  <!-- Welcome Section -->
   <section class="welcome-section">
     <h1 class="welcome-title">Добро пожаловать, {{ userName }}!</h1>
     <p class="welcome-subtitle">Norma Pro — ваша платформа для работы с ГОСТами и стандартами</p>
@@ -13,7 +12,6 @@
     </div>
   </section>
 
-  <!-- Search Section -->
   <section class="search-section">
     <mat-form-field appearance="fill" class="search-field">
       <mat-label>Поиск ГОСТов или документов</mat-label>
@@ -29,32 +27,59 @@
     </mat-form-field>
   </section>
 
-  <!-- Dashboard Grid -->
   <section class="dashboard-grid">
     <mat-grid-list cols="3" rowHeight="250px" gutterSize="24px">
       <mat-grid-tile
         *ngFor="let item of dashboardItems"
         [colspan]="1"
         [rowspan]="1"
-        [ngStyle]="{ display: item.adminOnly && !isAdmin ? 'none' : 'block' }"
       >
-        <mat-card class="dashboard-card">
-          <mat-card-header>
-            <mat-icon mat-card-avatar class="dashboard-icon">{{ item.icon }}</mat-icon>
-            <mat-card-title>{{ item.label }}</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <p>{{ item.description }}</p>
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-flat-button color="primary" [routerLink]="item.route">Перейти</button>
-          </mat-card-actions>
-        </mat-card>
+        <ng-container [ngSwitch]="item.type">
+          <app-card-project
+            *ngSwitchCase="'project'"
+            [title]="item.label"
+            [description]="item.description"
+            [icon]="item.icon"
+            [link]="item.route"
+          ></app-card-project>
+          <app-card-user
+            *ngSwitchCase="'user'"
+            [title]="item.label"
+            [description]="item.description"
+            [icon]="item.icon"
+            [link]="item.route"
+          ></app-card-user>
+          <app-card-file
+            *ngSwitchCase="'file'"
+            [title]="item.label"
+            [description]="item.description"
+            [icon]="item.icon"
+            [link]="item.route"
+          ></app-card-file>
+          <app-card-order
+            *ngSwitchCase="'order'"
+            [title]="item.label"
+            [description]="item.description"
+            [icon]="item.icon"
+            [link]="item.route"
+          ></app-card-order>
+          <mat-card class="dashboard-card" *ngSwitchDefault>
+            <mat-card-header>
+              <mat-icon mat-card-avatar class="dashboard-icon">{{ item.icon }}</mat-icon>
+              <mat-card-title>{{ item.label }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p>{{ item.description }}</p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-flat-button color="primary" [routerLink]="item.route">Перейти</button>
+            </mat-card-actions>
+          </mat-card>
+        </ng-container>
       </mat-grid-tile>
     </mat-grid-list>
   </section>
 
-  <!-- Recent Items -->
   <section class="recent-section">
     <h3 class="section-title">Недавние документы и проекты</h3>
     <mat-list>
@@ -73,7 +98,6 @@
     </mat-list>
   </section>
 
-  <!-- Notifications -->
   <section class="notifications-section">
     <h3 class="section-title">Последние уведомления</h3>
     <mat-list>
@@ -90,7 +114,6 @@
     </mat-list>
   </section>
 
-  <!-- Quick Actions for Admins -->
   <section class="quick-actions" *ngIf="isAdmin">
     <h3 class="section-title">Административные действия</h3>
     <div class="action-buttons">

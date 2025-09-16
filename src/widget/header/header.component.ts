@@ -7,10 +7,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { EroutesConstants } from '../../routes';
-import { AuthService, UserService } from '../../entity';
+import { AuthService, UserApiService, IGetUser } from '../../entity';
 import { MatMenuModule } from '@angular/material/menu';
-import { CommonModule } from '@angular/common';
-import { NgIf } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -34,7 +33,7 @@ import { NgIf } from '@angular/common';
 export class HeaderComponent {
   protected readonly ERoutesConstans = EroutesConstants;
   readonly #authService = inject(AuthService);
-  readonly #userApiService = inject(UserService);
+  readonly #userApiService = inject(UserApiService);
 
   userName = '';
   userRoleId = '';
@@ -43,28 +42,43 @@ export class HeaderComponent {
   isRolesLoaded = false;
   isMobileMenuOpen = false;
 
-  menuItems = [
-    { label: 'Главная', route: '/main/home' },
-    { label: 'Документы', route: '/main/documents' },
-    { label: 'Проекты', route: '/main/projects' },
-    { label: 'Клиенты', route: '/main/clients' },
-    { label: 'Уведомления', route: '/main/notifications' },
-    { label: 'Пользователи', route: '/main/users' },
-  ];
-
   constructor() {
-    if (this.isAuthenticated) {
-      const user = this.#authService.user;
-      if (user && user.id) {
-      } else {
-        this.userName = 'Гость';
-        this.userRoleId = '';
-      }
-    } else {
-      this.userName = 'Гость';
-      this.userRoleId = '';
-    }
+    // this.loadUserInfoAndRoles();
   }
+
+  // loadUserInfoAndRoles() {
+  //   const userId = localStorage.getItem('userId');
+  //   if (userId) {
+  //     this.#userApiService.getUserInfo(userId).subscribe({
+  //       next: (response: IGetUser) => {
+  //         const { firstName = '', lastName = '', roleId = '' } = response.user;
+  //         this.userName = `${lastName} ${firstName}`.trim() || 'Имя пользователя';
+  //         this.userRoleId = roleId;
+  //         this.loadRoles();
+  //       },
+  //       error: () => {
+  //         this.userName = 'Имя пользователя';
+  //       },
+  //     });
+  //   } else {
+  //     this.userName = 'Гость';
+  //     this.userRoleId = '';
+  //   }
+  // }
+
+  // loadRoles() {
+  //   this.#userApiService.getUserRole({ name: '', page: 1, pageSize: 10 }).subscribe({
+  //     next: (roles) => {
+  //       roles.rows.forEach((r) => {
+  //         this.rolesMap.set(r.name.toLowerCase(), r.id);
+  //       });
+  //       this.isRolesLoaded = true;
+  //     },
+  //     error: () => {
+  //       this.isRolesLoaded = false;
+  //     },
+  //   });
+  // }
 
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;

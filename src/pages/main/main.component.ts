@@ -14,6 +14,8 @@ import { ERoles } from '../../entity';
 import { EroutesConstants } from '../../routes';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../../widget/header/header.component';
+import { CardFileComponent,CardOrderComponent,CardProjectComponent, CardUserComponent} from '../../widget';
+
 @Component({
   selector: 'app-main',
   standalone: true,
@@ -29,6 +31,10 @@ import { HeaderComponent } from '../../widget/header/header.component';
     RouterLink,
     FormsModule,
     HeaderComponent,
+    CardFileComponent,
+    CardOrderComponent,
+    CardProjectComponent,
+    CardUserComponent,
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
@@ -44,36 +50,32 @@ export class MainComponent implements OnInit {
 
   dashboardItems = [
     {
-      icon: 'description',
-      label: 'Документы',
-      route: '/main/documents',
-      description: 'Поиск и управление ГОСТами',
-    },
-    {
+      type: 'project',
       icon: 'assignment',
       label: 'Проекты',
       route: '/main/projects',
       description: 'Ваши рабочие проекты',
     },
     {
+      type: 'user',
       icon: 'group',
-      label: 'Клиенты',
-      route: '/main/clients',
-      description: 'Управление клиентами',
-    },
-    {
-      icon: 'notifications',
-      label: 'Уведомления',
-      route: '/main/notifications',
-      description: 'Обновления и изменения',
-    },
-    { icon: 'folder', label: 'Файлы', route: '/main/files', description: 'Загруженные файлы' },
-    {
-      icon: 'admin_panel_settings',
-      label: 'Админка',
-      route: '/main/admin',
+      label: 'Пользователи',
+      route: '/main/users',
       description: 'Управление пользователями',
-      adminOnly: true,
+    },
+    {
+      type: 'file',
+      icon: 'folder',
+      label: 'Файлы',
+      route: '/main/files',
+      description: 'Загруженные файлы',
+    },
+    {
+      type: 'order',
+      icon: 'description',
+      label: 'Документы',
+      route: '/main/documents',
+      description: 'Поиск и управление ГОСТами',
     },
   ];
 
@@ -110,7 +112,6 @@ export class MainComponent implements OnInit {
   onSearch() {
     if (this.searchQuery.trim()) {
       console.log('Поиск ГОСТов:', this.searchQuery);
-      // Здесь будет вызов API или переход на страницу поиска
     }
   }
 

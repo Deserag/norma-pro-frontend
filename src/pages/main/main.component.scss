@@ -19,8 +19,14 @@
   animation: fadeIn 0.5s ease-in-out;
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
 
@@ -119,60 +125,9 @@
   flex-grow: 1;
 }
 
-.dashboard-card {
-  height: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #ffffff;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-  &:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.2);
-  }
-}
-
-.dashboard-icon {
-  font-size: 40px;
-  color: #3498db;
-  background: rgba(52, 152, 219, 0.1);
-  border-radius: 50%;
-  padding: 10px;
-}
-
-.dashboard-card mat-card-title {
-  font-size: 20px;
-  font-weight: 600;
-  color: #2c3e50;
-  margin: 16px 0 8px;
-}
-
-.dashboard-card mat-card-content p {
-  font-size: 14px;
-  color: #7f8c8d;
-  line-height: 1.5;
-}
-
-.dashboard-card mat-card-actions {
-  padding: 16px;
-  border-top: 1px solid #ecf0f1;
-}
-
-.dashboard-card button {
-  background: linear-gradient(90deg, #3498db 0%, #2980b9 100%);
-  color: #ffffff;
-  padding: 8px 24px;
-  border-radius: 8px;
-  transition: background 0.3s ease;
-
-  &:hover {
-    background: linear-gradient(90deg, #2980b9 0%, #1a5276 100%);
-  }
-}
-
 // Recent и Notifications Sections
-.recent-section, .notifications-section {
+.recent-section,
+.notifications-section {
   padding: 24px;
   background: #ffffff;
   border-radius: 12px;
@@ -236,12 +191,6 @@ mat-list-item {
 }
 
 // Адаптивность
-// @media (max-width: 1024px) {
-//   .dashboard-grid mat-grid-list {
-//     rowHeight: 220px;
-//   }
-// }
-
 @media (max-width: 768px) {
   .main-container {
     padding: 16px;
@@ -259,11 +208,6 @@ mat-list-item {
   .search-section {
     padding: 16px;
   }
-
-//   .dashboard-grid mat-grid-list {
-//     cols: 1;
-//     rowHeight: 200px;
-//   }
 
   .action-buttons {
     flex-direction: column;
