@@ -17,6 +17,7 @@ export const authRoutes: Routes = [
 export const userRoutes: Routes = [
   {
     path: EroutesConstants.USER_PANEL,
+    canActivate: [AuthGuard],
     loadComponent: () => import('../pages/user/user.component').then((m) => m.UserComponent),
     children: [
       {
@@ -28,6 +29,31 @@ export const userRoutes: Routes = [
         path: EroutesConstants.USER_LIST,
         loadComponent: () =>
           import('../pages/user/user-list/user-list.component').then((m) => m.UserListComponent),
+      },
+    ],
+  },
+];
+
+export const orderRoutes: Routes = [
+  {
+    path: EroutesConstants.ORDERS_PANEL,
+    canActivate: [AuthGuard],
+    loadComponent: () => import('../pages/order/order.component').then((m) => m.OrderComponent),
+    children: [
+      {
+        path: '',
+        redirectTo: EroutesConstants.ORDERS_PANEL,
+        pathMatch: 'full',
+      },
+      {
+        path: EroutesConstants.ORDER_LIST,
+        loadComponent: () =>
+          import('../pages/order/order-list/order-list').then((m) => m.OrderList),
+      },
+      {
+        path: EroutesConstants.ORDER_PAGE,
+        loadComponent: () =>
+          import('../pages/order/order-page/order-page').then((m) => m.OrderPage),
       },
     ],
   },
@@ -51,6 +77,7 @@ export const personalAccount: Routes = [
 export const clientRoutes: Routes = [
   {
     path: EroutesConstants.CLIENT_PANEL,
+    canActivate: [AuthGuard],
     loadComponent: () => import('../pages/clients/clients.component').then((m) => m.ClientsComponent),
     children: [
       {
@@ -77,6 +104,7 @@ export const clientRoutes: Routes = [
 export const notificationRoutes: Routes = [
   {
     path: EroutesConstants.NOTIFICATION_PANEL,
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('../pages/notifications/notifications.component').then((m) => m.NotificationsComponent),
   },
@@ -85,6 +113,7 @@ export const notificationRoutes: Routes = [
 export const fileRoutes: Routes = [
   {
     path: EroutesConstants.FILE_PANEL,
+    canActivate: [AuthGuard],
     loadComponent: () => import('../pages/file/file.component').then((m) => m.FileComponent),
   },
 ];
@@ -97,8 +126,28 @@ export const adminRoutes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: EroutesConstants.ADMIN_PANEL,
+        redirectTo: EroutesConstants.ADMIN_USER_LIST,
         pathMatch: 'full',
+      },
+      {
+        path: EroutesConstants.ADMIN_USER_LIST,
+        loadComponent: () => import('../pages/admin-panel/panel-user/panel-user').then((m) => m.PanelUser),
+      },
+      {
+        path: EroutesConstants.ADMIN_FILES_LIST,
+        loadComponent: () => import('../pages/admin-panel/panel-file/panel-file').then((m) => m.PanelFile),
+      },
+      {
+        path: EroutesConstants.ADMIN_ORDERS_LIST,
+        loadComponent: () => import('../pages/admin-panel/panel-order/panel-order').then((m) => m.PanelOrder),
+      },
+      {
+        path: EroutesConstants.ADMIN_CLIENTS_LIST,
+        loadComponent: () => import('../pages/admin-panel/panel-client/panel-client').then((m) => m.PanelClient),
+      },
+      {
+        path: EroutesConstants.ADMIN_ROLES_LIST,
+        loadComponent: () => import('../pages/admin-panel/panel-user-role/panel-user-role').then((m) => m.PanelUserRole),
       },
     ],
   },
@@ -116,6 +165,7 @@ export const mainRoutes: Routes = [
   ...fileRoutes,
   ...adminRoutes,
   ...personalAccount,
+  ...orderRoutes,
 ];
 
 export const appRoutes: Routes = [

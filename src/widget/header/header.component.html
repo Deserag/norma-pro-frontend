@@ -2,16 +2,27 @@
   <div class="header-container">
     <a [routerLink]="['/', ERoutesConstans.MAIN]" class="logo">NormaPro</a>
     <nav class="nav-links desktop" *ngIf="isAuthenticated">
-      <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.HOME_PAGE]" routerLinkActive="active" mat-button>Главная</a>
-      <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.CLIENT_PANEL]" routerLinkActive="active" mat-button>Клиенты</a>
-      <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.USER_PANEL]" routerLinkActive="active" mat-button>Пользователи</a>
-      <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL]" routerLinkActive="active" mat-button>Админ панель</a>
-      <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.FILE_PANEL]" routerLinkActive="active" mat-button>Файлы</a>
-      <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.NOTIFICATION_PANEL]" routerLinkActive="active" mat-button>Уведомления</a>
-      <a *ngIf="isAdminOrSuperAdmin" 
-         [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL]" 
-         routerLinkActive="active"
-         mat-button>Админка</a>
+      <div class="nav-item" mat-button>
+        <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.HOME_PAGE]" routerLinkActive="active">Главная</a>
+      </div>
+      <div class="nav-item" mat-button [matMenuTriggerFor]="clientMenu">
+        <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.CLIENT_PANEL]" routerLinkActive="active">Клиенты</a>
+      </div>
+      <div class="nav-item" mat-button [matMenuTriggerFor]="userMenu">
+        <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.USER_PANEL]" routerLinkActive="active">Пользователи</a>
+      </div>
+      <div class="nav-item" mat-button [matMenuTriggerFor]="adminMenu">
+        <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL]" routerLinkActive="active">Админ панель</a>
+      </div>
+      <div class="nav-item" mat-button [matMenuTriggerFor]="adminMenu">
+        <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ORDERS_PANEL]" routerLinkActive="active">Заказы</a>
+      </div>
+      <div class="nav-item" mat-button [matMenuTriggerFor]="fileMenu">
+        <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.FILE_PANEL]" routerLinkActive="active">Файлы</a>
+      </div>
+      <div class="nav-item" mat-button [matMenuTriggerFor]="notificationMenu">
+        <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.NOTIFICATION_PANEL]" routerLinkActive="active">Уведомления</a>
+      </div>
     </nav>
     <button mat-icon-button class="mobile-menu-toggle" (click)="toggleMobileMenu()">
       <mat-icon>{{isMobileMenuOpen ? 'close' : 'menu'}}</mat-icon>
@@ -29,25 +40,84 @@
     <div *ngIf="!isAuthenticated" class="guest-menu">
       <a [routerLink]="['/', ERoutesConstans.AUTH, ERoutesConstans.LOGIN]" mat-button>Войти</a>
     </div>
+
+    <!-- Submenus -->
+    <mat-menu #clientMenu="matMenu" class="submenu">
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.CLIENT_PANEL, ERoutesConstans.CLIENT_LIST]">Список</button>
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.CLIENT_PANEL, ERoutesConstans.CLIENT_PAGE]">Страница</button>
+    </mat-menu>
+    <mat-menu #userMenu="matMenu" class="submenu">
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.USER_PANEL, ERoutesConstans.USER_LIST]">Список</button>
+    </mat-menu>
+    <mat-menu #adminMenu="matMenu" class="submenu">
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL, ERoutesConstans.ADMIN_USER_LIST]">Список пользователей</button>
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL, ERoutesConstans.ADMIN_FILES_LIST]">Список файлов</button>
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL, ERoutesConstans.ADMIN_ORDERS_LIST]">Список заказов</button>
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL, ERoutesConstans.ADMIN_CLIENTS_LIST]">Список клиентов</button>
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL, ERoutesConstans.ADMIN_ROLES_LIST]">Список ролей</button>
+    </mat-menu>
+    <mat-menu #orderMenu="matMenu" class="submenu">
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL, ERoutesConstans.ADMIN_USER_LIST]">Список пользователей</button>
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL, ERoutesConstans.ADMIN_FILES_LIST]">Список файлов</button>
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL, ERoutesConstans.ADMIN_ORDERS_LIST]">Список заказов</button>
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL, ERoutesConstans.ADMIN_CLIENTS_LIST]">Список клиентов</button>
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL, ERoutesConstans.ADMIN_ROLES_LIST]">Список ролей</button>
+    </mat-menu>
+    <mat-menu #fileMenu="matMenu" class="submenu">
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.FILE_PANEL]">Список</button>
+    </mat-menu>
+    <mat-menu #notificationMenu="matMenu" class="submenu">
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.NOTIFICATION_PANEL]">Список</button>
+    </mat-menu>
   </div>
 </mat-toolbar>
 <mat-sidenav-container class="mobile-menu" *ngIf="isMobileMenuOpen">
   <mat-sidenav mode="over" [(opened)]="isMobileMenuOpen">
     <nav class="nav-links mobile" *ngIf="isAuthenticated">
       <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.HOME_PAGE]" routerLinkActive="active" mat-button (click)="toggleMobileMenu()">Главная</a>
-      <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.CLIENT_PANEL]" routerLinkActive="active" mat-button (click)="toggleMobileMenu()">Клиенты</a>
-      <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.USER_PANEL]" routerLinkActive="active" mat-button (click)="toggleMobileMenu()">Пользователи</a>
-      <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.FILE_PANEL]" routerLinkActive="active" mat-button (click)="toggleMobileMenu()">Файлы</a>
-      <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.NOTIFICATION_PANEL]" routerLinkActive="active" mat-button (click)="toggleMobileMenu()">Уведомления</a>
-      <a *ngIf="isAdminOrSuperAdmin" 
-         [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL]" 
-         routerLinkActive="active"
-         mat-button
-         (click)="toggleMobileMenu()">Админка</a>
+      <div class="nav-item" mat-button (click)="toggleClientMobileMenu()">
+        <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.CLIENT_PANEL]" routerLinkActive="active">Клиенты</a>
+      </div>
+      <div class="nav-item" mat-button (click)="toggleUserMobileMenu()">
+        <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.USER_PANEL]" routerLinkActive="active">Пользователи</a>
+      </div>
+      <div class="nav-item" mat-button (click)="toggleAdminMobileMenu()">
+        <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL]" routerLinkActive="active">Админ панель</a>
+      </div>
+      <div class="nav-item" mat-button (click)="toggleFileMobileMenu()">
+        <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.FILE_PANEL]" routerLinkActive="active">Файлы</a>
+      </div>
+      <div class="nav-item" mat-button (click)="toggleNotificationMobileMenu()">
+        <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.NOTIFICATION_PANEL]" routerLinkActive="active">Уведомления</a>
+      </div>
+      <div class="nav-item" mat-button *ngIf="isAdminOrSuperAdmin" (click)="toggleAdminMobileMenu()">
+        <a [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL]" routerLinkActive="active">Админка</a>
+      </div>
       <button mat-button (click)="onClickLogOut(); toggleMobileMenu()">Выйти</button>
     </nav>
     <div class="mobile-guest" *ngIf="!isAuthenticated">
       <a [routerLink]="['/', ERoutesConstans.AUTH, ERoutesConstans.LOGIN]" mat-button (click)="toggleMobileMenu()">Войти</a>
     </div>
+    <!-- Mobile Submenus -->
+    <mat-menu #clientMobileMenu="matMenu" class="submenu mobile">
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.CLIENT_PANEL, ERoutesConstans.CLIENT_LIST]">Список</button>
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.CLIENT_PANEL, ERoutesConstans.CLIENT_PAGE]">Страница</button>
+    </mat-menu>
+    <mat-menu #userMobileMenu="matMenu" class="submenu mobile">
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.USER_PANEL, ERoutesConstans.USER_LIST]">Список</button>
+    </mat-menu>
+    <mat-menu #adminMobileMenu="matMenu" class="submenu mobile">
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL, ERoutesConstans.ADMIN_USER_LIST]">Список пользователей</button>
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL, ERoutesConstans.ADMIN_FILES_LIST]">Список файлов</button>
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL, ERoutesConstans.ADMIN_ORDERS_LIST]">Список заказов</button>
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL, ERoutesConstans.ADMIN_CLIENTS_LIST]">Список клиентов</button>
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.ADMIN_PANEL, ERoutesConstans.ADMIN_ROLES_LIST]">Список ролей</button>
+    </mat-menu>
+    <mat-menu #fileMobileMenu="matMenu" class="submenu mobile">
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.FILE_PANEL]">Список</button>
+    </mat-menu>
+    <mat-menu #notificationMobileMenu="matMenu" class="submenu mobile">
+      <button mat-menu-item [routerLink]="['/', ERoutesConstans.MAIN, ERoutesConstans.NOTIFICATION_PANEL]">Список</button>
+    </mat-menu>
   </mat-sidenav>
 </mat-sidenav-container>

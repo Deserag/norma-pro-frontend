@@ -1,0 +1,52 @@
+.panel-user-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+  
+      h1 {
+        margin: 0;
+        font-size: 24px;
+        color: #333;
+      }
+  
+      button {
+        padding: 8px 16px;
+      }
+    }
+  
+    .user-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+  
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+  
+      button {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        cursor: pointer;
+  
+        &:disabled {
+          cursor: not-allowed;
+          background-color: #f5f5f5;
+          color: #999;
+        }
+  
+        &:hover:not(:disabled) {
+          background-color: #e0e0e0;
+        }
+      }
+    }
+}

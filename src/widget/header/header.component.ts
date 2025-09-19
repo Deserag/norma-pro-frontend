@@ -45,6 +45,30 @@ export class HeaderComponent {
     // this.loadUserInfoAndRoles();
   }
 
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  toggleClientMobileMenu() {
+    // Logic to toggle client submenu in mobile view if needed
+  }
+
+  toggleUserMobileMenu() {
+    // Logic to toggle user submenu in mobile view if needed
+  }
+
+  toggleAdminMobileMenu() {
+    // Logic to toggle admin submenu in mobile view if needed
+  }
+
+  toggleFileMobileMenu() {
+    // Logic to toggle file submenu in mobile view if needed
+  }
+
+  toggleNotificationMobileMenu() {
+    // Logic to toggle notification submenu in mobile view if needed
+  }
+
   // loadUserInfoAndRoles() {
   //   const userId = localStorage.getItem('userId');
   //   if (userId) {
@@ -79,9 +103,6 @@ export class HeaderComponent {
   //   });
   // }
 
-  toggleMobileMenu() {
-    this.isMobileMenuOpen = !this.isMobileMenuOpen;
-  }
 
   onClickLogOut() {
     this.#authService.logout();

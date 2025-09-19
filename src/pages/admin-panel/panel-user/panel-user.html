@@ -1,1 +1,22 @@
-<p>panel-user works!</p>
+<div class="panel-user-container">
+    <div class="panel-header">
+      <h1>Список пользователей</h1>
+      <button mat-button color="primary" (click)="onCreateUser()">Создать пользователя</button>
+    </div>
+  
+    <div class="user-cards-grid">
+      <app-user-card-panel
+        *ngFor="let user of users"
+        [user]="user">
+      </app-user-card-panel>
+    </div>
+  
+    <div class="pagination">
+      <button mat-button
+              *ngFor="let page of getPageNumbers()"
+              [disabled]="page === currentPage"
+              (click)="onPageChange(page)">
+        {{ page }}
+      </button>
+    </div>
+  </div>

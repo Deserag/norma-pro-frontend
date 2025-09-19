@@ -25,6 +25,10 @@
   gap: 24px;
 }
 
+.nav-item {
+  position: relative;
+}
+
 .nav-links a {
   color: #ffffff;
   text-decoration: none;
@@ -44,6 +48,27 @@
   font-weight: 600;
 }
 
+.submenu {
+  background-color: #ffffff; /* Changed to solid white for better opacity */
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25); /* Stronger shadow for contrast */
+  padding: 8px 0;
+  opacity: 1; /* Explicitly set to 1 to ensure no transparency */
+}
+
+.submenu button {
+  color: #333;
+  font-size: 14px;
+  padding: 8px 16px;
+  width: 100%;
+  text-align: left;
+  background-color: transparent; /* Ensure button background is solid */
+}
+
+.submenu button:hover {
+  background-color: #e0e0e0; /* Darker hover color for better visibility */
+}
+
 .user-menu {
   position: relative;
 }
@@ -53,9 +78,9 @@
 }
 
 .user-menu-content {
-  background-color: #ffffff;
+  background-color: #ffffff; /* Solid white for consistency */
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25); /* Stronger shadow */
 }
 
 .user-menu-content button {
@@ -65,7 +90,7 @@
 }
 
 .user-menu-content button:hover {
-  background-color: #f5f5f5;
+  background-color: #e0e0e0; /* Darker hover for visibility */
 }
 
 .mobile-menu-toggle {
@@ -111,5 +136,20 @@ mat-toolbar {
 
   .logo {
     font-size: 24px;
+  }
+
+  .submenu.mobile {
+    width: 100%;
+    padding: 0;
+    background-color: #ffffff; /* Solid white for mobile submenu */
+  }
+
+  .submenu.mobile button {
+    padding: 12px 16px;
+    background-color: transparent;
+  }
+
+  .submenu.mobile button:hover {
+    background-color: #e0e0e0;
   }
 }

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OrderList } from './order-list';
+import { RoleCardPanel } from './role-card-panel';
 
-describe('OrderList', () => {
-  let component: OrderList;
-  let fixture: ComponentFixture<OrderList>;
+describe('RoleCardPanel', () => {
+  let component: RoleCardPanel;
+  let fixture: ComponentFixture<RoleCardPanel>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OrderList]
+      imports: [RoleCardPanel]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(OrderList);
+    fixture = TestBed.createComponent(RoleCardPanel);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

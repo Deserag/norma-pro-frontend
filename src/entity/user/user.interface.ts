@@ -1,3 +1,4 @@
+import { IFile } from '../file';
 import { IResTablePage } from '../work-page';
 
 export interface IUser {
@@ -14,6 +15,8 @@ export interface IUser {
   password: string;
   roleId: string;
   telegramId: string | null;
+  files: IFile
+  avatarUrl: string | null
 }
 export interface ICreateUser {
   firstName: string;

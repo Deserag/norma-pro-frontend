@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PanelUser } from './panel-user';
+import { FileCardPanel } from './file-card-panel';
 
-describe('PanelUser', () => {
-  let component: PanelUser;
-  let fixture: ComponentFixture<PanelUser>;
+describe('FileCardPanel', () => {
+  let component: FileCardPanel;
+  let fixture: ComponentFixture<FileCardPanel>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PanelUser]
+      imports: [FileCardPanel]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PanelUser);
+    fixture = TestBed.createComponent(FileCardPanel);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

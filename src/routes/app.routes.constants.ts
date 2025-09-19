@@ -26,7 +26,10 @@ export enum EroutesConstants {
 
   PERSONAL_ACCOUNT = 'personal-account',
 
-  ORDERS = 'orders',
+  ORDERS_PANEL = 'orders',
+  ORDER_LIST = 'orders-list',
+  ORDER_PAGE = 'order-page',
+  
   EMPLOYEES = 'employees',
   USER_PANEL = 'user-panel',
   USER_LIST = 'user-list',

@@ -1,0 +1,40 @@
+<div class="user-card">
+  <div class="user-card-header">
+    <img *ngIf="user.avatarUrl" [src]="user.avatarUrl" alt="Avatar" class="user-avatar">
+    <div *ngIf="!user.avatarUrl" class="user-avatar placeholder">
+      <mat-icon>person</mat-icon>
+    </div>
+    <div class="user-info">
+      <h2>{{ user.firstName }} {{ user.lastName }} {{ user.middleName || '' }}</h2>
+      <p class="role"><mat-icon>badge</mat-icon> Роль: {{ user.roleId || 'Не указана' }}</p>
+      <p class="company"><mat-icon>business</mat-icon> Отделы: {{ user.departments.join(', ') || 'Не указаны' }}</p>
+    </div>
+  </div>
+  <div class="user-card-body">
+    <p><strong><mat-icon>email</mat-icon> Email:</strong> {{ user.email }}</p>
+    <p><strong><mat-icon>login</mat-icon> Логин:</strong> {{ user.login }}</p>
+    <p><strong><mat-icon>cake</mat-icon> Дата рождения:</strong> {{ user.birthDate | date:'medium' }}</p>
+    <p><strong><mat-icon>add_circle</mat-icon> Создан:</strong> {{ user.createdAt | date:'medium' }}</p>
+    <p><strong><mat-icon>update</mat-icon> Обновлен:</strong> {{ user.updatedAt | date:'medium' }}</p>
+  </div>
+  <div class="user-files-section">
+    <h3><mat-icon>folder</mat-icon> Файлы пользователя</h3>
+    <mat-list>
+      <mat-list-item *ngFor="let file of user.files">
+        <mat-icon matListIcon>insert_drive_file</mat-icon>
+        <div matLine>
+          <span>{{ file.name }}</span>
+          <span class="file-meta"> ({{ file.type }} • {{ file.createdAt | date:'shortDate' }})</span>
+        </div>
+      </mat-list-item>
+      <mat-list-item *ngIf="!user.files">
+        <mat-icon matListIcon>info</mat-icon>
+        <div matLine>Нет файлов</div>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <div class="user-card-actions">
+    <button mat-raised-button color="primary" (click)="onEdit()">Редактировать</button>
+    <button mat-raised-button color="warn" (click)="onDelete()">Удалить</button>
+  </div>
+</div>
