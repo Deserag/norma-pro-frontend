@@ -1,0 +1,221 @@
+// Основной контейнер занимает всю высоту и ширину
+.main-container {
+    min-height: calc(100vh - 64px); // Учитываем высоту шапки (64px по умолчанию для mat-toolbar)
+    width: 100%;
+    padding: 32px 16px;
+    background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  
+  // Welcome Section
+  .welcome-section {
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(135deg, #ffffff 0%, #e6f0fa 100%);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in-out;
+  
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+  
+  .welcome-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .welcome-subtitle {
+    font-size: 16px;
+    color: #7f8c8d;
+    max-width: 600px;
+    margin: 0 auto 24px;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  
+  .user-info mat-icon {
+    font-size: 56px;
+    color: #3498db;
+    background: rgba(52, 152, 219, 0.1);
+    border-radius: 50%;
+    padding: 8px;
+  }
+  
+  .user-details {
+    text-align: center;
+  }
+  
+  .user-details strong {
+    font-size: 18px;
+    color: #2c3e50;
+    display: block;
+  }
+  
+  .user-details small {
+    color: #7f8c8d;
+    font-weight: 500;
+  }
+  
+  // Search Section
+  .search-section {
+    padding: 24px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: center;
+  }
+  
+  .search-field {
+    width: 100%;
+    max-width: 800px;
+  
+    .mat-mdc-form-field {
+      width: 100%;
+    }
+  
+    .mat-mdc-form-field-infix {
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 2px solid #ecf0f1;
+      transition: border-color 0.3s ease;
+    }
+  
+    .mat-mdc-form-field-infix:focus-within {
+      border-color: #3498db;
+    }
+  
+    .mat-mdc-form-field-suffix {
+      margin-left: 8px;
+    }
+  
+    input {
+      font-size: 16px;
+      color: #2c3e50;
+    }
+  
+    .mat-mdc-icon-button {
+      color: #3498db;
+      font-size: 24px;
+    }
+  }
+  
+  // Dashboard Grid
+  .dashboard-grid {
+    flex-grow: 1;
+  }
+  
+  // Recent и Notifications Sections
+  .recent-section,
+  .notifications-section {
+    padding: 24px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .section-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 16px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 8px;
+    display: inline-block;
+  }
+  
+  mat-list-item {
+    padding: 16px 0;
+    transition: background 0.2s ease;
+  
+    &:hover {
+      background: #f9fbfd;
+    }
+  
+    .meta {
+      font-size: 13px;
+      color: #7f8c8d;
+      display: block;
+    }
+  
+    button mat-icon {
+      color: #3498db;
+    }
+  }
+  
+  // Quick Actions
+  .quick-actions {
+    padding: 24px;
+    background: linear-gradient(135deg, #f9fbfd 0%, #ffffff 100%);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .action-buttons button {
+    min-width: 220px;
+    padding: 12px;
+    border-radius: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+    }
+  }
+  
+  // Адаптивность
+  @media (max-width: 768px) {
+    .main-container {
+      padding: 16px;
+      gap: 24px;
+    }
+  
+    .welcome-title {
+      font-size: 24px;
+    }
+  
+    .welcome-subtitle {
+      font-size: 14px;
+    }
+  
+    .search-section {
+      padding: 16px;
+    }
+  
+    .action-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .action-buttons button {
+      width: 100%;
+      max-width: 300px;
+    }
+  }

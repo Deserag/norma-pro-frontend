@@ -1,4 +1,3 @@
-// src/app/routes.ts (или где у вас определены маршруты)
 import { Routes } from '@angular/router';
 import { EroutesConstants } from '../routes';
 import { AuthGuard } from '../entity';
@@ -37,6 +36,7 @@ export const userRoutes: Routes = [
 export const personalAccount: Routes = [
   {
     path: EroutesConstants.PERSONAL_ACCOUNT,
+    canActivate: [AuthGuard],
     loadComponent: () => import('../pages/personal-account/personal-account.component').then((m) => m.PersonalAccountComponent),
     children: [
       {
@@ -46,7 +46,7 @@ export const personalAccount: Routes = [
       },
     ]
   }
-]
+];
 
 export const clientRoutes: Routes = [
   {
@@ -58,13 +58,18 @@ export const clientRoutes: Routes = [
         redirectTo: EroutesConstants.CLIENT_LIST,
         pathMatch: 'full',
       },
-      // {
-      //   path: EroutesConstants.CLIENT_LIST,
-      //   loadComponent: () =>
-      //     import('../pages/client/client-list/client-list.component').then(
-      //       (m) => m.ClientListComponent
-      //     ),
-      // },
+      {
+        path: EroutesConstants.CLIENT_LIST,
+        loadComponent: () => import('../pages/clients/client-list/client-list').then((m) => m.ClientList),
+      },
+      {
+        path: EroutesConstants.CLIENT_PAGE,
+        loadComponent: () => import('../pages/clients/client-page/client-page').then((m) => m.ClientPage),
+      },
+      {
+        path: EroutesConstants.CLIENT_USERS,
+        loadComponent: () => import('../pages/clients/client-users/client-users').then((m) => m.ClientUsers),
+      },
     ],
   },
 ];
@@ -76,7 +81,6 @@ export const notificationRoutes: Routes = [
       import('../pages/notifications/notifications.component').then((m) => m.NotificationsComponent),
   },
 ];
-
 
 export const fileRoutes: Routes = [
   {
@@ -96,13 +100,6 @@ export const adminRoutes: Routes = [
         redirectTo: EroutesConstants.ADMIN_PANEL,
         pathMatch: 'full',
       },
-      // {
-      //   path: EroutesConstants.ADMIN_USER_LIST,
-      //   loadComponent: () =>
-      //     import('../pages/admin/admin-users/admin-users.component').then(
-      //       (m) => m.AdminUsersComponent
-      //     ),
-      // },
     ],
   },
 ];
@@ -111,7 +108,7 @@ export const mainRoutes: Routes = [
   { path: '', redirectTo: EroutesConstants.HOME_PAGE, pathMatch: 'full' },
   {
     path: EroutesConstants.HOME_PAGE,
-    loadComponent: () => import('../pages/main/main.component').then((c) => c.MainComponent),
+    loadComponent: () => import('../pages/work-page/work-page').then((c) => c.WorkPage),
   },
   ...userRoutes,
   ...clientRoutes,
@@ -119,7 +116,6 @@ export const mainRoutes: Routes = [
   ...fileRoutes,
   ...adminRoutes,
   ...personalAccount,
-  { path: '**', redirectTo: EroutesConstants.HOME_PAGE },
 ];
 
 export const appRoutes: Routes = [
@@ -130,9 +126,20 @@ export const appRoutes: Routes = [
   {
     path: EroutesConstants.MAIN,
     canActivate: [AuthGuard],
-    loadComponent: () => import('../pages/main/main.component').then((c) => c.MainComponent),
-    children: mainRoutes,
+    loadComponent: () =>
+      import('../pages/main/main.component').then(
+        (c) => c.MainComponent
+      ),
+    loadChildren: () => mainRoutes,
   },
-  { path: '', redirectTo: EroutesConstants.MAIN, pathMatch: 'full' },
-  { path: '**', redirectTo: EroutesConstants.AUTH },
+
+  {
+    path: EroutesConstants.AUTH,
+    loadChildren: () => authRoutes,
+  },
+  {
+    path: '**',
+    redirectTo: EroutesConstants.MAIN,
+  },
+
 ];

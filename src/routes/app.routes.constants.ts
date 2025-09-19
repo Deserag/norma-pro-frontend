@@ -21,6 +21,8 @@ export enum EroutesConstants {
   CLIENTS = 'clients',
   CLIENT_PANEL = 'client-panel',
   CLIENT_LIST = 'client-list',
+  CLIENT_PAGE = 'client-page',
+  CLIENT_USERS = 'client-users',
 
   PERSONAL_ACCOUNT = 'personal-account',
 

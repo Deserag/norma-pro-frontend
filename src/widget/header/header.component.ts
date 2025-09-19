@@ -24,9 +24,8 @@ import { CommonModule, NgIf } from '@angular/common';
     RouterLink,
     RouterLinkActive,
     MatMenuModule,
-    NgIf,
     CommonModule,
-  ],
+],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
